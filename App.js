@@ -14,7 +14,20 @@ export default function App() {
   const [quantidade, setQuantidade] = useState('');
   const [materiais, setMateriais] = useState([]);
 
-  // --- Funções de Requisição e Efeitos (Os alunos implementarão aqui) ---
+  useEffect(() => {
+    setMateriais([
+      {
+        id: '1',
+        nome: 'Seringa',
+        quantidade: 50,
+      },
+      {
+        id: '2',
+        nome: 'Luva Descartável',
+        quantidade: 100,
+      },
+    ]);
+  }, []);
 
   return (
     <View style={styles.container}>
