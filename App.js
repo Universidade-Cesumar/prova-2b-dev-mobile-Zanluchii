@@ -15,8 +15,11 @@ export default function App() {
 
     const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
 
-    async function buscarMateriais() {
-    console.log('Buscando materiais...');
+   async function buscarMateriais() {
+  const response = await fetch(API_URL);
+  const data = await response.json();
+
+  console.log(data);
 }
 
   useEffect(() => {
