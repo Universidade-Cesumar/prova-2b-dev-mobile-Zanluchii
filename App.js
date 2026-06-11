@@ -50,7 +50,7 @@ export default function App() {
 
       <FlatList
         testID="lista-materiais"
-        data={[]}
+        data={materiais}
         keyExtractor={(item, index) => index.toString()}
         renderItem={() => null}
       />
