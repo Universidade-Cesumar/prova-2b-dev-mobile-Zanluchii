@@ -33,12 +33,12 @@ export default function App() {
       />
 
       <TextInput
-      testID="input-quantidade"
-      style={styles.input}
-      placeholder="Quantidade em estoque"
-      keyboardType="numeric"
-      value={quantidade}
-      onChangeText={setQuantidade}
+        testID="input-quantidade"
+        style={styles.input}
+        placeholder="Quantidade em estoque"
+        keyboardType="numeric"
+        value={quantidade}
+        onChangeText={setQuantidade}
       />
 
       <TouchableOpacity
@@ -52,7 +52,12 @@ export default function App() {
         testID="lista-materiais"
         data={materiais}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={() => null}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.nome}</Text>
+            <Text>Quantidade: {item.quantidade}</Text>
+          </View>
+        )}
       />
     </View>
   );
