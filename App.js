@@ -12,6 +12,7 @@ import {
 export default function App() {
   const [nome, setNome] = useState('');
   const [quantidade, setQuantidade] = useState('');
+  const [materiais, setMateriais] = useState([]);
 
   // --- Funções de Requisição e Efeitos (Os alunos implementarão aqui) ---
 
