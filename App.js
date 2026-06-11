@@ -8,7 +8,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Almoxarifado - Enfermagem</Text>
+      <Text style={styles.title}>Controle de Estoque - Enfermagem</Text>
       
       {/* Breve descrição do projeto inserida abaixo */}
       <Text style={styles.description}>
