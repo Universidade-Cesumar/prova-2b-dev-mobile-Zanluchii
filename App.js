@@ -6,7 +6,6 @@ import {
   TextInput,
   TouchableOpacity,
   FlatList,
-  ActivityIndicator,
 } from 'react-native';
 
 export default function App() {
@@ -54,20 +53,17 @@ export default function App() {
         onChangeText={setQuantidade}
       />
 
-      <TouchableOpacity
-        testID="btn-cadastrar"
-        style={styles.botao}
-      >
+      <TouchableOpacity testID="btn-cadastrar" style={styles.botao}>
         <Text style={styles.textoBotao}>Cadastrar Material</Text>
       </TouchableOpacity>
 
       <FlatList
         testID="lista-materiais"
         data={materiais}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => item.id || index.toString()}
         renderItem={({ item }) => (
-          <View>
-            <Text>{item.nome}</Text>
+          <View style={styles.card}>
+            <Text style={styles.nomeMaterial}>{item.nome}</Text>
             <Text>Quantidade: {item.quantidade}</Text>
           </View>
         )}
@@ -113,6 +109,16 @@ const styles = StyleSheet.create({
   },
   textoBotao: {
     color: '#fff',
+    fontWeight: 'bold',
+  },
+  card: {
+    backgroundColor: '#f5f5f5',
+    padding: 12,
+    borderRadius: 8,
+    marginBottom: 10,
+  },
+  nomeMaterial: {
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });
