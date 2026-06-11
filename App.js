@@ -10,7 +10,8 @@ import {
 } from 'react-native';
 
 export default function App() {
-  // --- Estados da Aplicação (Os alunos implementarão aqui) ---
+  const [nome, setNome] = useState('');
+  const [quantidade, setQuantidade] = useState('');
 
   // --- Funções de Requisição e Efeitos (Os alunos implementarão aqui) ---
 
@@ -26,13 +27,17 @@ export default function App() {
         testID="input-nome"
         style={styles.input}
         placeholder="Nome do material"
+        value={nome}
+        onChangeText={setNome}
       />
 
       <TextInput
-        testID="input-quantidade"
-        style={styles.input}
-        placeholder="Quantidade em estoque"
-        keyboardType="numeric"
+      testID="input-quantidade"
+      style={styles.input}
+      placeholder="Quantidade em estoque"
+      keyboardType="numeric"
+      value={quantidade}
+      onChangeText={setQuantidade}
       />
 
       <TouchableOpacity
