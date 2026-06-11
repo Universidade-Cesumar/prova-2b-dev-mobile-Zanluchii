@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 
 export default function App() {
-  const [nome, setNome] = useState('');
-  const [quantidade, setQuantidade] = useState('');
-  const [materiais, setMateriais] = useState([]);
+    const [nome, setNome] = useState('');
+    const [quantidade, setQuantidade] = useState('');
+    const [materiais, setMateriais] = useState([]);
+
+    const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
 
   useEffect(() => {
     setMateriais([
