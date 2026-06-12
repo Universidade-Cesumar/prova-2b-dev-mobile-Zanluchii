@@ -13,6 +13,7 @@ const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
 export default function App() {
   const [nome, setNome] = useState('');
   const [quantidade, setQuantidade] = useState('');
+  const [busca, setBusca] = useState('');
   const [materiais, setMateriais] = useState([]);
 
   async function buscarMateriais() {
@@ -53,6 +54,11 @@ export default function App() {
     buscarMateriais();
   }, []);
 
+  const materiaisFiltrados = materiais.filter((item) => {
+    const nomeMaterial = (item.nomeInsumo || item.nome || '').toLowerCase();
+    return nomeMaterial.includes(busca.toLowerCase());
+  });
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Controle de Estoque - Enfermagem</Text>
@@ -86,9 +92,21 @@ export default function App() {
         <Text style={styles.textoBotao}>Cadastrar Material</Text>
       </TouchableOpacity>
 
+      <TextInput
+        testID="input-busca"
+        style={styles.input}
+        placeholder="Buscar material"
+        value={busca}
+        onChangeText={setBusca}
+      />
+
+      <Text testID="total-itens" style={styles.totalItens}>
+        Total de itens: {materiaisFiltrados.length}
+      </Text>
+
       <FlatList
-        testID="lista-materiais"
-        data={materiais}
+        testID="lista-materials"
+        data={materiaisFiltrados}
         keyExtractor={(item, index) => item.id || index.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
@@ -160,6 +178,11 @@ const styles = StyleSheet.create({
   textoBotao: {
     color: '#fff',
     fontWeight: 'bold',
+  },
+  totalItens: {
+    fontSize: 14,
+    color: '#333',
+    marginBottom: 10,
   },
   card: {
     backgroundColor: '#f5f5f5',
