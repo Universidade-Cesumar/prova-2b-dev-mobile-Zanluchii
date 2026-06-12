@@ -26,6 +26,29 @@ export default function App() {
     }
   }
 
+  async function cadastrarMaterial() {
+    try {
+      const novoMaterial = {
+        nomeInsumo: nome,
+        quantidade: quantidade,
+      };
+
+      await fetch(API_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(novoMaterial),
+      });
+
+      setNome('');
+      setQuantidade('');
+      buscarMateriais();
+    } catch (error) {
+      console.log('Erro ao cadastrar material:', error);
+    }
+  }
+
   useEffect(() => {
     buscarMateriais();
   }, []);
@@ -55,7 +78,11 @@ export default function App() {
         onChangeText={setQuantidade}
       />
 
-      <TouchableOpacity testID="btn-cadastrar" style={styles.botao}>
+      <TouchableOpacity
+        testID="btn-cadastrar"
+        style={styles.botao}
+        onPress={cadastrarMaterial}
+      >
         <Text style={styles.textoBotao}>Cadastrar Material</Text>
       </TouchableOpacity>
 
