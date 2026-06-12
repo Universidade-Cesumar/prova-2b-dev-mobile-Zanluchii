@@ -8,33 +8,26 @@ import {
   FlatList,
 } from 'react-native';
 
+const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
+
 export default function App() {
-    const [nome, setNome] = useState('');
-    const [quantidade, setQuantidade] = useState('');
-    const [materiais, setMateriais] = useState([]);
+  const [nome, setNome] = useState('');
+  const [quantidade, setQuantidade] = useState('');
+  const [materiais, setMateriais] = useState([]);
 
-    const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
+  async function buscarMateriais() {
+    try {
+      const response = await fetch(API_URL);
+      const data = await response.json();
 
-   async function buscarMateriais() {
-  const response = await fetch(API_URL);
-  const data = await response.json();
-
-  console.log(data);
-}
+      setMateriais(data);
+    } catch (error) {
+      console.log('Erro ao buscar materiais:', error);
+    }
+  }
 
   useEffect(() => {
-    setMateriais([
-      {
-        id: '1',
-        nome: 'Seringa',
-        quantidade: 50,
-      },
-      {
-        id: '2',
-        nome: 'Luva Descartável',
-        quantidade: 100,
-      },
-    ]);
+    buscarMateriais();
   }, []);
 
   return (
@@ -72,8 +65,29 @@ export default function App() {
         keyExtractor={(item, index) => item.id || index.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <Text style={styles.nomeMaterial}>{item.nome}</Text>
-            <Text>Quantidade: {item.quantidade}</Text>
+            <Text style={styles.nomeMaterial}>
+              {item.nomeInsumo || item.nome || 'Material sem nome'}
+            </Text>
+
+            <Text>
+              Quantidade: {item.quantidade || 'Não informada'}
+            </Text>
+
+            <Text>
+              Categoria: {item.categoria || 'Não informada'}
+            </Text>
+
+            <Text>
+              Validade: {item.validade || 'Não informada'}
+            </Text>
+
+            <Text>
+              Fornecedor: {item.fornecedor || 'Não informado'}
+            </Text>
+
+            <Text>
+              Responsável: {item.responsavel || 'Não informado'}
+            </Text>
           </View>
         )}
       />
