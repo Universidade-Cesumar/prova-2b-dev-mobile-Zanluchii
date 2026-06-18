@@ -42,12 +42,17 @@ export default function App() {
     }
   }
 
-  async function cadastrarMaterial() {
-    try {
-      const novoMaterial = {
-        nomeInsumo: nome,
-        quantidade: quantidade,
-      };
+ async function cadastrarMaterial() {
+  if (!nome || !quantidade) {
+    console.log('Preencha nome e quantidade');
+    return;
+  }
+
+  try {
+    const novoMaterial = {
+      nomeInsumo: nome,
+      quantidade: quantidade,
+    };
 
       await fetch(API_URL, {
         method: 'POST',
