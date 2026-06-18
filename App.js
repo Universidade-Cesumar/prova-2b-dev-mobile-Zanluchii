@@ -51,7 +51,7 @@ export default function App() {
     try {
       const novoMaterial = {
         nomeInsumo: nome,
-        quantidade: quantidade,
+        quantidade: String(quantidade),
       };
 
       await fetch(API_URL, {
@@ -105,15 +105,20 @@ export default function App() {
     const novoEstoque = estoqueAtual - quantidadeRetirada;
 
     try {
-      await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          quantidade: novoEstoque,
+          quantidade: String(novoEstoque),
         }),
       });
+
+      if (!response.ok) {
+        console.log('Erro na requisição PATCH');
+        return;
+      }
 
       setRetirada('');
       buscarMateriais();
