@@ -141,6 +141,15 @@ export default function App() {
             <Text>
               Responsável: {item.responsavel || 'Não informado'}
             </Text>
+
+            <TextInput
+              testID="input-retirada"
+              style={styles.input}
+              placeholder="Quantidade para retirar"
+              keyboardType="numeric"
+              value={retirada}
+              onChangeText={setRetirada}
+            />
           </View>
         )}
       />
