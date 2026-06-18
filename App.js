@@ -77,6 +77,35 @@ export default function App() {
     }
   }
 
+  async function baixarEstoque(item) {
+    const estoqueAtual = Number(item.quantidade);
+    const quantidadeRetirada = Number(retirada);
+
+    if (!validarRetirada(estoqueAtual, quantidadeRetirada)) {
+      console.log('Retirada inválida');
+      return;
+    }
+
+    const novoEstoque = estoqueAtual - quantidadeRetirada;
+
+    try {
+      await fetch(`${API_URL}/${item.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          quantidade: novoEstoque,
+        }),
+      });
+
+      setRetirada('');
+      buscarMateriais();
+    } catch (error) {
+      console.log('Erro ao baixar estoque:', error);
+    }
+  }
+
   useEffect(() => {
     buscarMateriais();
   }, []);
@@ -159,6 +188,7 @@ export default function App() {
             <TouchableOpacity
               testID="btn-baixar"
               style={styles.botao}
+              onPress={() => baixarEstoque(item)}
             >
               <Text style={styles.textoBotao}>Baixar Estoque</Text>
             </TouchableOpacity>
