@@ -65,6 +65,18 @@ export default function App() {
     }
   }
 
+  async function excluirMaterial(id) {
+    try {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE',
+      });
+
+      buscarMateriais();
+    } catch (error) {
+      console.log('Erro ao excluir material:', error);
+    }
+  }
+
   useEffect(() => {
     buscarMateriais();
   }, []);
@@ -154,6 +166,7 @@ export default function App() {
             <TouchableOpacity
               testID="btn-excluir"
               style={styles.botaoExcluir}
+              onPress={() => excluirMaterial(item.id)}
             >
               <Text style={styles.textoBotao}>Excluir Material</Text>
             </TouchableOpacity>
