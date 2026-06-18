@@ -42,17 +42,17 @@ export default function App() {
     }
   }
 
- async function cadastrarMaterial() {
-  if (!nome || !quantidade) {
-    console.log('Preencha nome e quantidade');
-    return;
-  }
+  async function cadastrarMaterial() {
+    if (!nome || !quantidade) {
+      console.log('Preencha nome e quantidade');
+      return;
+    }
 
-  try {
-    const novoMaterial = {
-      nomeInsumo: nome,
-      quantidade: quantidade,
-    };
+    try {
+      const novoMaterial = {
+        nomeInsumo: nome,
+        quantidade: quantidade,
+      };
 
       await fetch(API_URL, {
         method: 'POST',
@@ -71,6 +71,11 @@ export default function App() {
   }
 
   async function excluirMaterial(id) {
+    if (!id) {
+      console.log('ID não encontrado para excluir');
+      return;
+    }
+
     try {
       await fetch(`${API_URL}/${id}`, {
         method: 'DELETE',
@@ -83,8 +88,14 @@ export default function App() {
   }
 
   async function baixarEstoque(item) {
+    const id = item.id || item.Id;
     const estoqueAtual = Number(item.quantidade);
     const quantidadeRetirada = Number(retirada);
+
+    if (!id) {
+      console.log('ID não encontrado para baixar estoque');
+      return;
+    }
 
     if (!validarRetirada(estoqueAtual, quantidadeRetirada)) {
       console.log('Retirada inválida');
@@ -94,7 +105,7 @@ export default function App() {
     const novoEstoque = estoqueAtual - quantidadeRetirada;
 
     try {
-      await fetch(`${API_URL}/${item.id}`, {
+      await fetch(`${API_URL}/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +179,7 @@ export default function App() {
       <FlatList
         testID="lista-materiais"
         data={materiaisFiltrados}
-        keyExtractor={(item, index) => item.id || index.toString()}
+        keyExtractor={(item, index) => item.id || item.Id || index.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <Text style={styles.nomeMaterial}>
@@ -201,7 +212,7 @@ export default function App() {
             <TouchableOpacity
               testID="btn-excluir"
               style={styles.botaoExcluir}
-              onPress={() => excluirMaterial(item.id)}
+              onPress={() => excluirMaterial(item.id || item.Id)}
             >
               <Text style={styles.textoBotao}>Excluir Material</Text>
             </TouchableOpacity>
