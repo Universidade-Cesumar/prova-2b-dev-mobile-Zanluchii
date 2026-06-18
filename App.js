@@ -10,11 +10,11 @@ import {
 
 const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
 
-function validarRetirada(estoqueAtual, quantidadeRetirada) {
-  return (
-    quantidadeRetirada > 0 &&
-    quantidadeRetirada <= estoqueAtual
-  );
+export function validarRetirada(estoqueAtual, quantidadeRetirada) {
+  const estoque = Number(estoqueAtual);
+  const retirada = Number(quantidadeRetirada);
+
+  return retirada > 0 && retirada <= estoque;
 }
 
 export default function App() {
@@ -28,7 +28,6 @@ export default function App() {
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-
       setMateriais(data);
     } catch (error) {
       console.log('Erro ao buscar materiais:', error);
@@ -122,25 +121,11 @@ export default function App() {
               {item.nomeInsumo || item.nome || 'Material sem nome'}
             </Text>
 
-            <Text>
-              Quantidade: {item.quantidade || 'Não informada'}
-            </Text>
-
-            <Text>
-              Categoria: {item.categoria || 'Não informada'}
-            </Text>
-
-            <Text>
-              Validade: {item.validade || 'Não informada'}
-            </Text>
-
-            <Text>
-              Fornecedor: {item.fornecedor || 'Não informado'}
-            </Text>
-
-            <Text>
-              Responsável: {item.responsavel || 'Não informado'}
-            </Text>
+            <Text>Quantidade: {item.quantidade || 'Não informada'}</Text>
+            <Text>Categoria: {item.categoria || 'Não informada'}</Text>
+            <Text>Validade: {item.validade || 'Não informada'}</Text>
+            <Text>Fornecedor: {item.fornecedor || 'Não informado'}</Text>
+            <Text>Responsável: {item.responsavel || 'Não informado'}</Text>
 
             <TextInput
               testID="input-retirada"
