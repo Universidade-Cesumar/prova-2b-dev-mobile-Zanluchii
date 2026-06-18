@@ -10,6 +10,13 @@ import {
 
 const API_URL = 'https://6a18c42023c3626470ac0118.mockapi.io/api/v1/insumos';
 
+function validarRetirada(estoqueAtual, quantidadeRetirada) {
+  return (
+    quantidadeRetirada > 0 &&
+    quantidadeRetirada <= estoqueAtual
+  );
+}
+
 export default function App() {
   const [nome, setNome] = useState('');
   const [quantidade, setQuantidade] = useState('');
