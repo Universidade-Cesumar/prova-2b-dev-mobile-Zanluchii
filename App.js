@@ -143,6 +143,12 @@ export default function App() {
               value={retirada}
               onChangeText={setRetirada}
             />
+            <TouchableOpacity
+              testID="btn-baixar"
+              style={styles.botao}
+            >
+            <Text style={styles.textoBotao}>Baixar Estoque</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
