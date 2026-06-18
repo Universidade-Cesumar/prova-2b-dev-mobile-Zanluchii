@@ -22,6 +22,7 @@ export default function App() {
   const [quantidade, setQuantidade] = useState('');
   const [busca, setBusca] = useState('');
   const [materiais, setMateriais] = useState([]);
+  const [retirada, setRetirada] = useState('');
 
   async function buscarMateriais() {
     try {
@@ -112,7 +113,7 @@ export default function App() {
       </Text>
 
       <FlatList
-        testID="lista-materials"
+        testID="lista-materiais"
         data={materiaisFiltrados}
         keyExtractor={(item, index) => item.id || index.toString()}
         renderItem={({ item }) => (
