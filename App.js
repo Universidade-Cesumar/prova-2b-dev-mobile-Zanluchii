@@ -143,11 +143,19 @@ export default function App() {
               value={retirada}
               onChangeText={setRetirada}
             />
+
             <TouchableOpacity
               testID="btn-baixar"
               style={styles.botao}
             >
-            <Text style={styles.textoBotao}>Baixar Estoque</Text>
+              <Text style={styles.textoBotao}>Baixar Estoque</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              testID="btn-excluir"
+              style={styles.botaoExcluir}
+            >
+              <Text style={styles.textoBotao}>Excluir Material</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -189,7 +197,14 @@ const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 8,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 10,
+  },
+  botaoExcluir: {
+    backgroundColor: '#D32F2F',
+    padding: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 10,
   },
   textoBotao: {
     color: '#fff',
