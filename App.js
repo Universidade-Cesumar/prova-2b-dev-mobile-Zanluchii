@@ -93,7 +93,7 @@ export default function App() {
     const quantidadeRetirada = Number(retiradas[id]);
 
     if (!id) {
-      console.log('ID não encontrado para baixar estoque');
+      console.log('ID não encontrado');
       return;
     }
 
@@ -106,26 +106,33 @@ export default function App() {
 
     try {
       const response = await fetch(`${API_URL}/${id}`, {
-        method: 'PATCH',
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          ...item,
           quantidade: String(novoEstoque),
         }),
       });
 
       if (!response.ok) {
-        console.log('Erro na requisição PATCH');
+        console.log('Erro ao atualizar estoque');
         return;
       }
+
+      setMateriais((listaAtual) =>
+        listaAtual.map((material) =>
+          (material.id || material.Id) === id
+            ? { ...material, quantidade: String(novoEstoque) }
+            : material
+        )
+      );
 
       setRetiradas({
         ...retiradas,
         [id]: '',
       });
-
-      buscarMateriais();
     } catch (error) {
       console.log('Erro ao baixar estoque:', error);
     }
