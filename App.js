@@ -30,7 +30,7 @@ export default function App() {
   const [quantidade, setQuantidade] = useState('');
   const [busca, setBusca] = useState('');
   const [materiais, setMateriais] = useState([]);
-  const [retirada, setRetirada] = useState('');
+  const [retiradas, setRetiradas] = useState({});
 
   async function buscarMateriais() {
     try {
@@ -90,7 +90,7 @@ export default function App() {
   async function baixarEstoque(item) {
     const id = item.id || item.Id;
     const estoqueAtual = Number(item.quantidade);
-    const quantidadeRetirada = Number(retirada);
+    const quantidadeRetirada = Number(retiradas[id]);
 
     if (!id) {
       console.log('ID não encontrado para baixar estoque');
@@ -120,7 +120,11 @@ export default function App() {
         return;
       }
 
-      setRetirada('');
+      setRetiradas({
+        ...retiradas,
+        [id]: '',
+      });
+
       buscarMateriais();
     } catch (error) {
       console.log('Erro ao baixar estoque:', error);
@@ -185,44 +189,53 @@ export default function App() {
         testID="lista-materiais"
         data={materiaisFiltrados}
         keyExtractor={(item, index) => item.id || item.Id || index.toString()}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <Text style={styles.nomeMaterial}>
-              {item.nomeInsumo || item.nome || 'Material sem nome'}
-            </Text>
+        renderItem={({ item }) => {
+          const id = item.id || item.Id;
 
-            <Text>Quantidade: {item.quantidade || 'Não informada'}</Text>
-            <Text>Categoria: {item.categoria || 'Não informada'}</Text>
-            <Text>Validade: {item.validade || 'Não informada'}</Text>
-            <Text>Fornecedor: {item.fornecedor || 'Não informado'}</Text>
-            <Text>Responsável: {item.responsavel || 'Não informado'}</Text>
+          return (
+            <View style={styles.card}>
+              <Text style={styles.nomeMaterial}>
+                {item.nomeInsumo || item.nome || 'Material sem nome'}
+              </Text>
 
-            <TextInput
-              testID="input-retirada"
-              style={styles.input}
-              placeholder="Quantidade para retirar"
-              keyboardType="numeric"
-              value={retirada}
-              onChangeText={setRetirada}
-            />
+              <Text>Quantidade: {item.quantidade || 'Não informada'}</Text>
+              <Text>Categoria: {item.categoria || 'Não informada'}</Text>
+              <Text>Validade: {item.validade || 'Não informada'}</Text>
+              <Text>Fornecedor: {item.fornecedor || 'Não informado'}</Text>
+              <Text>Responsável: {item.responsavel || 'Não informado'}</Text>
 
-            <TouchableOpacity
-              testID="btn-baixar"
-              style={styles.botao}
-              onPress={() => baixarEstoque(item)}
-            >
-              <Text style={styles.textoBotao}>Baixar Estoque</Text>
-            </TouchableOpacity>
+              <TextInput
+                testID="input-retirada"
+                style={styles.input}
+                placeholder="Quantidade para retirar"
+                keyboardType="numeric"
+                value={retiradas[id] || ''}
+                onChangeText={(valor) =>
+                  setRetiradas({
+                    ...retiradas,
+                    [id]: valor,
+                  })
+                }
+              />
 
-            <TouchableOpacity
-              testID="btn-excluir"
-              style={styles.botaoExcluir}
-              onPress={() => excluirMaterial(item.id || item.Id)}
-            >
-              <Text style={styles.textoBotao}>Excluir Material</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+              <TouchableOpacity
+                testID="btn-baixar"
+                style={styles.botao}
+                onPress={() => baixarEstoque(item)}
+              >
+                <Text style={styles.textoBotao}>Baixar Estoque</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                testID="btn-excluir"
+                style={styles.botaoExcluir}
+                onPress={() => excluirMaterial(id)}
+              >
+                <Text style={styles.textoBotao}>Excluir Material</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
       />
     </View>
   );
